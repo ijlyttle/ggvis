@@ -125,6 +125,8 @@ to_csv.data.frame <- function(x, header = TRUE) {
 # Format a vector for csv output
 format_vec_csv <- function(vec) UseMethod("format_vec_csv")
 #' @export
+format_vec_csv.logical <- function(vec) quote_text(ifelse(vec, "foo", ""))
+#' @export
 format_vec_csv.numeric <- function(vec) vec
 #' @export
 format_vec_csv.character <- function(vec) quote_text(vec)
@@ -176,6 +178,8 @@ eval_vector.data.frame <- function(x, f) {
 data_range <- function(x) UseMethod("data_range")
 #' @export
 data_range.default <- function(x) range2(x, na.rm = TRUE)
+#' @export
+data_range.logical <- function(x) c("false", "true")[c(any(!x), any(x))]
 #' @export
 data_range.character <- function(x) unique(na.omit(x))
 #' @export
